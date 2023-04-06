@@ -1,3 +1,5 @@
+import glob
+
 
 def multiplication_table(a, b):
     """
@@ -14,7 +16,7 @@ def multiplication_table(a, b):
     pass
 
 
-def print_directory_contents(sPath):
+def print_directory_contents(spath):
     """
     Функция принимает имя каталога и распечатывает его содержимое
     в виде «путь и имя файла», а также любые другие
@@ -24,7 +26,9 @@ def print_directory_contents(sPath):
     нельзя. Данная задача показывает ваше умение работать с
     вложенными структурами.
     """
-    pass
+    # pass
+    for item in glob.iglob(f'{spath}/**/*', recursive=True):
+        print(item)
 
 
 def generate_random_num():
@@ -72,4 +76,6 @@ def upgrade_bank_deposit():
 
 
 if __name__=='__main__':
-    pass
+    # pass
+    path = "/home/roman/GeekBrains/Interview_py/homework/homework"
+    print_directory_contents(path)
