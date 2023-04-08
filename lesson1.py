@@ -1,4 +1,5 @@
 import glob
+import os
 
 
 def multiplication_table(a, b):
@@ -29,6 +30,19 @@ def print_directory_contents(spath):
     # pass
     for item in glob.iglob(f'{spath}/**/*', recursive=True):
         print(item)
+
+def directory_contents(spath):
+    list_file = os.listdir(spath)
+    complete_file_list = list()
+    for file in list_file:
+        complete_path = os.path.join(spath, file)
+        if os.path.isdir(complete_path):
+            complete_file_list = complete_file_list + directory_contents(complete_path)
+        else:
+            complete_file_list.append(complete_path)
+
+    return complete_file_list
+
 
 
 def generate_random_num():
@@ -77,5 +91,9 @@ def upgrade_bank_deposit():
 
 if __name__=='__main__':
     # pass
-    path = "/home/roman/GeekBrains/Interview_py/homework/homework"
+    path = os.getcwd()
     print_directory_contents(path)
+    second = directory_contents(path)
+    # print(f'Второй вариант {second}')
+    for i in second:
+        print(i)
