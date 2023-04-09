@@ -59,8 +59,19 @@ def generate_random_num(start_num, stop_num):
     :param stop_num:
     :return:
     """
-    pass
+    if start_num == 0 or stop_num == 0:
+        return print("Ошибка! нуль нельзя вводить")
+    else:
+        list_key = []
+        list_value = []
+        count = 1
+        for item in range(start_num, stop_num):
+            list_key.append("elem_" + str(count))
+            list_value.append(item)
+            count += 1
 
+        dict1 = dict(zip(list_key, list_value))
+        return print(f"Словарь>>{dict1}\nСписок элементов>>{list_value}")
 
 def bank_deposit(deposit_sum, deposit_term):
     """
@@ -122,7 +133,9 @@ if __name__=='__main__':
             print(i)
 
     elif start_fun == 4:
-        pass
+        start = int(input('начальное число генерации: '))
+        stop = int(input('конечное число генерации: '))
+        generate_random_num(start,stop)
 
     elif start_fun == 5:
         pass
