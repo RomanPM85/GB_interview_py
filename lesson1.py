@@ -76,10 +76,10 @@ def generate_random_num(start_num, stop_num):
 def bank_deposit(deposit_sum, deposit_term):
     """
     Клиент банка делает депозит на определенный срок.
-    В зависимости от суммы и срока вклада определяется процентная ставка: 1000–10000 руб.
-    (6 месяцев — 5 % годовых, год — 6 % годовых, 2 года — 5 % годовых). 10000–100000 руб.
-    (6 месяцев — 6 % годовых, год — 7 % годовых, 2 года – 6.5 % годовых). 100000–1000000 руб.
-    (6 месяцев — 7 % годовых, год — 8 % годовых, 2 года — 7.5 % годовых).
+    В зависимости от суммы и срока вклада определяется процентная ставка:
+    1000–10000 руб.(6 месяцев — 5 % годовых, год — 6 % годовых, 2 года — 5 % годовых).
+    10000–100000 руб.(6 месяцев — 6 % годовых, год — 7 % годовых, 2 года – 6.5 % годовых).
+    100000–1000000 руб.(6 месяцев — 7 % годовых, год — 8 % годовых, 2 года — 7.5 % годовых).
     Необходимо написать функцию, в которую будут передаваться параметры: сумма вклада и срок вклада.
     Каждый из трех банковских продуктов должен быть представлен в виде словаря с ключами(begin_sum, end_sum, 6, 12, 24).
     Ключам соответствуют значения начала и конца диапазона суммы вклада и значения процентной ставки для каждого срока.
@@ -89,8 +89,30 @@ def bank_deposit(deposit_sum, deposit_term):
     :param deposit_term:
     :return:
     """
-    pass
+    banking_products = [
+        {'begin_sum': 1000, 'end_sum': 10000, '6': 0.05, '12': 0.06, '24': 0.05},
+        {'begin_sum': 10000, 'end_sum': 100000, '6': 0.06, '12': 0.07, '24': 0.065},
+        {'begin_sum': 100000, 'end_sum': 1000000, '6': 0.07, '12': 0.08, '24': 0.075}
+    ]
+    selected_product = {}
+    for item in banking_products:
+        if int(deposit_sum) >= item.get('begin_sum'):
+            if int(deposit_sum) <= item.get('end_sum'):
+                selected_product = item
+    # print(selected_product)
 
+    selected_percentage = 0
+    for key in selected_product:
+        if key != deposit_term:
+            continue
+        else:
+            selected_percentage = selected_product[key]
+            # print(selected_percentage)
+
+    output_deposit_sum = float(deposit_sum) * selected_percentage + float(deposit_sum)
+    return print(f"Сумма вклада {deposit_sum}, срок хранения {deposit_term} месяца,\n"
+                 f"процентная ставка составит {selected_percentage}%,\n"
+                 f"сумма в конце срока составит {output_deposit_sum:.2f}")
 
 def upgrade_bank_deposit():
     """
@@ -138,7 +160,9 @@ if __name__=='__main__':
         generate_random_num(start,stop)
 
     elif start_fun == 5:
-        pass
+        input_deposit_sum=input(f"Сумма вклада:")
+        input_deposit_term=input(f"срок хранения 6, 12, 24 месяца:")
+        bank_deposit(input_deposit_sum, input_deposit_term)
 
     elif start_fun == 6:
         pass
