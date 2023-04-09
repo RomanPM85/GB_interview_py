@@ -14,8 +14,13 @@ def multiplication_table(a, b):
     :param b:
     :return:
     """
-    pass
-
+    # pass
+    tabl = ''
+    for y in range(a, b):
+        for x in range(a, b):
+            tabl += f'{x * y}\t'
+        tabl += f'\n'
+    return tabl
 
 def print_directory_contents(spath):
     """
@@ -29,7 +34,7 @@ def print_directory_contents(spath):
     """
     # pass
     for item in glob.iglob(f'{spath}/**/*', recursive=True):
-        print(item)
+        return print(item)
 
 def directory_contents(spath):
     list_file = os.listdir(spath)
@@ -45,11 +50,13 @@ def directory_contents(spath):
 
 
 
-def generate_random_num():
+def generate_random_num(start_num, stop_num):
     """
     В функцию передавать начальное и конечное число генерации (нуль необходимо исключить).
     Заполнить этими данными список и словарь. Ключи словаря должны создаваться по шаблону: “elem_<номер_элемента>”.
     Вывести содержимое созданных списка и словаря.
+    :param start_num:
+    :param stop_num:
     :return:
     """
     pass
@@ -92,8 +99,37 @@ def upgrade_bank_deposit():
 if __name__=='__main__':
     # pass
     path = os.getcwd()
-    print_directory_contents(path)
-    second = directory_contents(path)
-    # print(f'Второй вариант {second}')
-    for i in second:
-        print(i)
+    start_fun = int(input(f"Выберите функцию для запуска по коду:\n"
+                          f"multiplication_table код=1\n"
+                          f"print_directory_contents код=2\n"
+                          f"directory_contents код=3\n"
+                          f"generate_random_num код=4\n"
+                          f"bank_deposit код=5\n"
+                          f"upgrade_bank_deposit код=6\n"
+                          f"Введите код>>"))
+    if start_fun == 1:
+        a = int(input(f"Введите ширину таблицы"))
+        b = int(input(f"Введите высоту таблицы"))
+        print(multiplication_table(a, b))
+
+    elif start_fun == 2:
+        print_directory_contents(path)
+
+    elif start_fun == 3:
+        second = directory_contents(path)
+        # print(f'Второй вариант {second}')
+        for i in second:
+            print(i)
+
+    elif start_fun == 4:
+        pass
+
+    elif start_fun == 5:
+        pass
+
+    elif start_fun == 6:
+        pass
+
+    else:
+        print(f"Доступной функции по коду {start_fun} нет! Введите цифру от 1 до 6")
+
