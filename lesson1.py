@@ -109,7 +109,9 @@ def bank_deposit(deposit_sum, deposit_term):
             selected_percentage = selected_product[key]
             # print(selected_percentage)
 
-    output_deposit_sum = float(deposit_sum) * selected_percentage + float(deposit_sum)
+    months_per_year = 12
+    output_deposit_sum = float(deposit_sum) * float(selected_percentage)\
+                         * float(deposit_term) / float(months_per_year) + float(deposit_sum)
     return print(f"Сумма вклада {deposit_sum}, срок хранения {deposit_term} месяца,\n"
                  f"процентная ставка составит {selected_percentage}%,\n"
                  f"сумма в конце срока составит {output_deposit_sum:.2f}")
