@@ -2,7 +2,7 @@ import glob
 import os
 
 
-def multiplication_table(a, b):
+def multiplication_table(height_table, width_table):
     """
     Функция, реализующую вывод таблицы умножения размерностью AｘB.
     Первый и второй множитель должны задаваться в виде аргументов функции.
@@ -10,17 +10,16 @@ def multiplication_table(a, b):
     После этого осуществляется вызов внешней lambda-функции, которая формирует на основе списка строку.
     Полученная строка выводится в главной функции.
     Элементы строки (элементы таблицы умножения) должны разделяться табуляцией.
-    :param a:
-    :param b:
+    :param height_table:
+    :param width_table:
     :return:
     """
     # pass
-    tabl = ''
-    for y in range(a, b):
-        for x in range(a, b):
-            tabl += f'{x * y}\t'
-        tabl += f'\n'
-    return tabl
+    height_str = [item for item in range(1, height_table + 1)]
+    width_str = [item for item in range(1, width_table + 1)]
+    multiplication = lambda x, y: x * y
+    return ''.join([''.join([f'{multiplication(x, y)}\t' for x in height_str]) + '\n' for y in width_str])
+
 
 def print_directory_contents(spath):
     """
@@ -116,7 +115,7 @@ def bank_deposit(deposit_sum, deposit_term):
                  f"процентная ставка составит {selected_percentage}%,\n"
                  f"сумма в конце срока составит {output_deposit_sum:.2f}")
 
-def upgrade_bank_deposit():
+def upgrade_bank_deposit(deposit_sum,deposit_term, monthly_payment):
     """
     Усовершенствовать программу «Банковский депозит».
     Третьим аргументом в функцию должна передаваться фиксированная ежемесячная сумма пополнения вклада.
@@ -127,7 +126,40 @@ def upgrade_bank_deposit():
     а главная функция — общую сумму по вкладу на конец периода.
     :return:
     """
-    pass
+
+
+    banking_products = [
+        {'begin_sum': 1000, 'end_sum': 10000, '6': 0.05, '12': 0.06, '24': 0.05},
+        {'begin_sum': 10000, 'end_sum': 100000, '6': 0.06, '12': 0.07, '24': 0.065},
+        {'begin_sum': 100000, 'end_sum': 1000000, '6': 0.07, '12': 0.08, '24': 0.075}
+    ]
+    selected_product = {}
+    for item in banking_products:
+        if int(deposit_sum) >= item.get('begin_sum'):
+            if int(deposit_sum) <= item.get('end_sum'):
+                selected_product = item
+    # print(selected_product)
+
+    selected_percentage = 0
+    for key in selected_product:
+        if key != deposit_term:
+            continue
+        else:
+            selected_percentage = selected_product[key]
+            # print(selected_percentage)
+
+    def compound_interest(deposit, percent):
+        mount_total_deposit = (deposit * percent) / 12
+        return mount_total_deposit
+
+
+    first_total_percent = compound_interest(float(deposit_sum), float(selected_percentage)) + deposit_sum
+    while deposit_term !=0:
+        next_total_percent=compound_interest(float(first_total_percent), float(selected_percentage)) + float(monthly_payment)
+        deposit_term = deposit_term - 1
+
+
+    return  total_amount
 
 
 
@@ -167,7 +199,10 @@ if __name__=='__main__':
         bank_deposit(input_deposit_sum, input_deposit_term)
 
     elif start_fun == 6:
-        pass
+        input_deposit_sum=input(f"Сумма вклада:")
+        input_deposit_term=input(f"срок хранения 6, 12, 24 месяца:")
+        input_deposit_monthly_payment=input(f"сумма ежемесячного пополнения:")
+        print(upgrade_bank_deposit(input_deposit_sum, input_deposit_term, input_deposit_monthly_payment))
 
     else:
         print(f"Доступной функции по коду {start_fun} нет! Введите цифру от 1 до 6")
