@@ -64,7 +64,7 @@ def generate_random_num(start_num, stop_num):
         list_key = []
         list_value = []
         count = 1
-        for item in range(start_num, stop_num):
+        for item in range(start_num, stop_num + 1):
             list_key.append("elem_" + str(count))
             list_value.append(item)
             count += 1
@@ -112,7 +112,7 @@ def bank_deposit(deposit_sum, deposit_term):
     output_deposit_sum = float(deposit_sum) * float(selected_percentage)\
                          * float(deposit_term) / float(months_per_year) + float(deposit_sum)
     return print(f"Сумма вклада {deposit_sum}, срок хранения {deposit_term} месяца,\n"
-                 f"процентная ставка составит {selected_percentage}%,\n"
+                 f"процентная ставка составит {selected_percentage * 100}%,\n"
                  f"сумма в конце срока составит {output_deposit_sum:.2f}")
 
 def upgrade_bank_deposit(deposit_sum,deposit_term, monthly_payment):
@@ -157,7 +157,6 @@ def upgrade_bank_deposit(deposit_sum,deposit_term, monthly_payment):
     while deposit_term !=0:
         next_total_percent=compound_interest(float(first_total_percent), float(selected_percentage)) + float(monthly_payment)
         deposit_term = deposit_term - 1
-
 
     return  total_amount
 
