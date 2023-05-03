@@ -124,10 +124,10 @@ def upgrade_bank_deposit(deposit_sum,deposit_term, monthly_payment):
     Например, при сроке вклада в 6 месяцев пополнение происходит в течение 4 месяцев.
     Вложенная функция возвращает сумму дополнительно внесенных средств (с процентами),
     а главная функция — общую сумму по вкладу на конец периода.
+    Расчеты с капитализацией по вкладу. Источник: https://mobile-testing.ru/vklad_s_popolneniem_snyatiem/
     :return:
     """
-
-
+    # pass
     banking_products = [
         {'begin_sum': 1000, 'end_sum': 10000, '6': 0.05, '12': 0.06, '24': 0.05},
         {'begin_sum': 10000, 'end_sum': 100000, '6': 0.06, '12': 0.07, '24': 0.065},
@@ -147,20 +147,30 @@ def upgrade_bank_deposit(deposit_sum,deposit_term, monthly_payment):
         else:
             selected_percentage = selected_product[key]
             # print(selected_percentage)
+    months_per_year = 12
+    def total_percent(period, payment):
+        percent = (period / months_per_year) / 100
+        total = 0
+        while period != 0:
+            sum_percent = total * percent
+            total = total + sum_percent + payment
+            period = period - 1
+        total = total + total * percent
+        return total
 
-    def compound_interest(deposit, percent):
-        mount_total_deposit = (deposit * percent) / 12
-        return mount_total_deposit
+    deposit_term = int(deposit_term)
+    monthly_payment = int(monthly_payment)
+    total_summ_percent = total_percent(deposit_term-2, monthly_payment)
+
+    output_deposit_sum = float(deposit_sum) * float(selected_percentage)\
+                         * float(deposit_term) / float(months_per_year) + float(deposit_sum)
 
 
-    first_total_percent = compound_interest(float(deposit_sum), float(selected_percentage)) + deposit_sum
-    while deposit_term !=0:
-        next_total_percent=compound_interest(float(first_total_percent), float(selected_percentage)) + float(monthly_payment)
-        deposit_term = deposit_term - 1
-
-    return  total_amount
-
-
+    return print(f"Сумма вклада {deposit_sum}, срок хранения {deposit_term} месяца,\n"
+                 f"процентная ставка составит {selected_percentage * 100}%,\n"
+                 f"сумма депозита с процентами составит {output_deposit_sum:.2f},\n"
+                 f"сумма процентов на ежемесячное пополнение составит {total_summ_percent:.2f},\n"
+                 f"Итоговая сумма в конце срока составит {output_deposit_sum + total_summ_percent:.2f}")
 
 if __name__=='__main__':
     # pass
@@ -201,7 +211,7 @@ if __name__=='__main__':
         input_deposit_sum=input(f"Сумма вклада:")
         input_deposit_term=input(f"срок хранения 6, 12, 24 месяца:")
         input_deposit_monthly_payment=input(f"сумма ежемесячного пополнения:")
-        print(upgrade_bank_deposit(input_deposit_sum, input_deposit_term, input_deposit_monthly_payment))
+        upgrade_bank_deposit(input_deposit_sum, input_deposit_term, input_deposit_monthly_payment)
 
     else:
         print(f"Доступной функции по коду {start_fun} нет! Введите цифру от 1 до 6")
