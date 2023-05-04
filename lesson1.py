@@ -149,7 +149,7 @@ def upgrade_bank_deposit(deposit_sum,deposit_term, monthly_payment):
             # print(selected_percentage)
     months_per_year = 12
     def total_percent(period, payment):
-        percent = (period / months_per_year) / 100
+        percent = (selected_percentage / months_per_year)
         total = 0
         while period != 0:
             sum_percent = total * percent
