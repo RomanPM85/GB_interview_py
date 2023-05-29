@@ -36,11 +36,12 @@ class ItemDiscount:
 
 
 class ItemDiscountReport(ItemDiscount):
-    def get_parent_data(self):
-        return print(f" Товар {self.__name}, с ценною {self.__price} руб")
+    @staticmethod
+    def get_parent_data():
+        return print(f" Товар {fruit.get_name()}, с ценною {fruit.get__price()} руб")
 
 
 
 if __name__ == "__main__":
     fruit = ItemDiscountReport("яблоко", "660")
-    print(f" Товар {fruit.get_name()}, с ценною {fruit.get__price()} руб")
+    fruit.get_parent_data()
