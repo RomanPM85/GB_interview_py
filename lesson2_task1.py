@@ -1,6 +1,4 @@
-# GB_interview_py
-
-
+"""
 Урок 2. Python - парадигма ООП особенности и отличия от других ЯП.
 
 1. Проверить механизм наследования в Python. Для этого создать два класса. Первый — родительский (ItemDiscount),
@@ -23,3 +21,20 @@
 на два класса. Инициализировать классы необязательно. Внутри каждого поместить функцию get_info, которая в
 первом классе будет отвечать за вывод названия товара, а вторая — его цены. Далее реализовать выполнение каждой
 из функции тремя способами.
+"""
+
+class ItemDiscount:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+
+
+class ItemDiscountReport(ItemDiscount):
+    def get_parent_data(self):
+        return print(f" Товар {self.name}, с ценною {self.price} руб")
+
+
+
+if __name__ == "__main__":
+    fruit = ItemDiscountReport("яблоко", "660")
+    fruit.get_parent_data()
